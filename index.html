@@ -3,60 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MusaTube</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,Helvetica,sans-serif;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
+    font-family:Arial, sans-serif;
     background:#f5f5f5;
     color:#111;
-    transition:.3s;
 }
-
-/* DARK MODE */
 
 body.dark{
-    background:#0f0f0f;
-    color:white;
+    background:#111;
+    color:#fff;
 }
-
-body.dark header,
-body.dark .sidebar,
-body.dark .card,
-body.dark .modal-content,
-body.dark .player-content{
-    background:#181818;
-    color:white;
-}
-
-body.dark button{
-    color:white;
-}
-
-/* HEADER */
 
 header{
     height:65px;
     background:white;
-    border-bottom:1px solid #ddd;
-
     display:flex;
     align-items:center;
-
-    padding:0 20px;
-
+    gap:20px;
+    padding:10px 20px;
     position:sticky;
     top:0;
+    z-index:10;
+    box-shadow:0 2px 8px #0002;
+}
 
-    z-index:50;
+.dark header{
+    background:#1b1b1b;
 }
 
 .logo{
@@ -67,1254 +44,694 @@ header{
 }
 
 .search{
+    flex:1;
+    max-width:650px;
     display:flex;
-    width:45%;
-    margin-left:70px;
 }
 
 .search input{
     width:100%;
-    padding:12px 18px;
-
+    padding:13px;
     border:1px solid #ccc;
     border-radius:25px 0 0 25px;
-
     font-size:16px;
 }
 
 .search button{
-    width:60px;
-
+    width:55px;
     border:1px solid #ccc;
     border-radius:0 25px 25px 0;
-
     cursor:pointer;
 }
 
-.header-buttons{
-    margin-left:auto;
+.profile{
+    border-radius:50%;
+    width:40px;
+    height:40px;
+    background:#673ab7;
+    color:white;
     display:flex;
-    gap:10px;
+    justify-content:center;
     align-items:center;
+    font-weight:bold;
 }
 
-.header-buttons button{
-    border:none;
-    background:#eee;
-
-    padding:10px 14px;
-
-    border-radius:20px;
-    cursor:pointer;
+.layout{
+    display:flex;
 }
-
-.post-button{
-    background:#ff0000 !important;
-    color:white !important;
-}
-
-/* SIDEBAR */
 
 .sidebar{
+    width:220px;
     position:fixed;
-
-    left:0;
     top:65px;
-
-    width:210px;
-
-    height:calc(100vh - 65px);
-
+    bottom:0;
+    padding:15px;
     background:white;
+    overflow:auto;
+}
 
-    padding:15px 10px;
-
-    overflow-y:auto;
+.dark .sidebar{
+    background:#1b1b1b;
 }
 
 .sidebar button{
     width:100%;
-
-    border:none;
-    background:white;
-
-    padding:14px;
-
+    padding:13px;
+    border:0;
+    background:transparent;
     text-align:left;
-
-    font-size:16px;
-
     border-radius:10px;
-
     cursor:pointer;
-
-    margin-bottom:3px;
+    font-size:15px;
+    color:inherit;
 }
 
 .sidebar button:hover{
     background:#eee;
 }
 
-/* CONTENT */
+.dark .sidebar button:hover{
+    background:#333;
+}
 
-.content{
-    margin-left:230px;
-    padding:25px;
+.main{
+    margin-left:220px;
+    width:calc(100% - 220px);
+    padding:20px;
+}
+
+.top-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.top-buttons button{
+    padding:12px 18px;
+    border:0;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.post{
+    background:#ff0000;
+    color:white;
+}
+
+.screen{
+    background:#673ab7;
+    color:white;
+}
+
+.camera{
+    background:#2196f3;
+    color:white;
 }
 
 .categories{
     display:flex;
-
     gap:10px;
-
-    overflow-x:auto;
-
-    margin-bottom:25px;
+    overflow:auto;
+    margin-bottom:20px;
 }
 
 .categories button{
-    border:none;
-
-    background:#e5e5e5;
-
+    border:0;
     padding:10px 18px;
-
     border-radius:20px;
-
     cursor:pointer;
-
     white-space:nowrap;
 }
 
-/* VIDEO GRID */
-
 .videos{
     display:grid;
-
-    grid-template-columns:
-    repeat(auto-fill,minmax(280px,1fr));
-
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
     gap:25px;
 }
 
-/* VIDEO CARD */
-
 .card{
     background:white;
-
-    border-radius:14px;
-
+    border-radius:12px;
     overflow:hidden;
-
-    box-shadow:0 2px 8px #ddd;
-
-    transition:.2s;
+    box-shadow:0 2px 8px #0002;
 }
 
-.card:hover{
-    transform:translateY(-3px);
+.dark .card{
+    background:#1d1d1d;
 }
 
 .thumbnail{
     width:100%;
-
-    height:180px;
-
-    object-fit:cover;
-
-    background:#111;
-
+    height:175px;
+    background:#222;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
     cursor:pointer;
+    overflow:hidden;
 }
 
-.info{
-    padding:13px;
+.thumbnail video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:12px;
 }
 
 .title{
-    font-size:18px;
     font-weight:bold;
-
     margin-bottom:7px;
 }
 
 .channel{
-    color:#777;
-    margin-bottom:6px;
-}
-
-.stats{
     color:#777;
     font-size:14px;
 }
 
 .actions{
     display:flex;
-
-    gap:7px;
-
-    margin-top:12px;
-
-    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
 }
 
 .actions button{
-    border:none;
-
+    border:0;
     background:#eee;
-
-    padding:8px 12px;
-
-    border-radius:20px;
-
+    padding:7px 10px;
+    border-radius:18px;
     cursor:pointer;
 }
 
-.actions button:hover{
-    background:#ddd;
+.dark .actions button{
+    background:#333;
+    color:white;
 }
-
-/* MODALS */
 
 .modal{
     display:none;
-
     position:fixed;
-
     inset:0;
-
-    background:rgba(0,0,0,.75);
-
+    background:#000b;
     z-index:100;
-
-    align-items:center;
-
     justify-content:center;
+    align-items:center;
+    padding:20px;
 }
 
-.modal-content{
-    width:520px;
-
-    max-width:95%;
-
-    max-height:90vh;
-
-    overflow-y:auto;
-
+.modal-box{
     background:white;
-
-    border-radius:18px;
-
+    color:#111;
+    width:min(700px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:15px;
     padding:25px;
 }
 
-.modal-content h2{
-    margin-bottom:20px;
+.dark .modal-box{
+    background:#222;
+    color:white;
 }
 
-.modal-content input,
-.modal-content textarea,
-.modal-content select{
+.modal-box h2{
+    margin-bottom:15px;
+}
+
+.close{
+    float:right;
+    border:0;
+    background:#eee;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+input,textarea,select{
     width:100%;
-
     padding:12px;
-
-    margin-bottom:12px;
-
+    margin:8px 0;
     border:1px solid #ccc;
-
-    border-radius:9px;
-
+    border-radius:8px;
     font-size:15px;
 }
 
-.modal-content textarea{
-    height:90px;
-
-    resize:none;
+textarea{
+    height:100px;
+    resize:vertical;
 }
 
 .modal-buttons{
     display:flex;
     gap:10px;
+    flex-wrap:wrap;
+    margin-top:10px;
 }
 
 .modal-buttons button{
-    padding:12px 18px;
-
-    border:none;
-
-    border-radius:20px;
-
-    cursor:pointer;
-}
-
-.red{
-    background:red;
-    color:white;
-}
-
-.gray{
-    background:#ddd;
-}
-
-/* CAMERA */
-
-#camera{
-    width:100%;
-
-    background:black;
-
-    border-radius:12px;
-
-    margin-bottom:15px;
-}
-
-.camera-buttons{
-    display:flex;
-
-    gap:8px;
-
-    flex-wrap:wrap;
-}
-
-.camera-buttons button{
     padding:11px 16px;
-
-    border:none;
-
-    border-radius:20px;
-
+    border:0;
+    border-radius:8px;
     cursor:pointer;
 }
 
-#recorded{
-    display:none;
-
-    width:100%;
-
-    margin-top:15px;
-}
-
-/* VIDEO PLAYER */
-
-#videoPlayerModal{
-    background:rgba(0,0,0,.95);
-}
-
-.player-content{
-    width:900px;
-    max-width:95%;
-
-    background:#111;
-
+.publish{
+    background:#ff0000;
     color:white;
-
-    padding:20px;
-
-    border-radius:15px;
 }
 
-#bigVideo{
+.record{
+    background:#2196f3;
+    color:white;
+}
+
+.stop{
+    background:#333;
+    color:white;
+}
+
+#cameraPreview,#screenPreview{
     width:100%;
-
-    max-height:65vh;
-
-    background:black;
+    max-height:350px;
+    background:#000;
+    border-radius:10px;
+    margin:10px 0;
 }
 
-.player-title{
-    font-size:22px;
-
-    font-weight:bold;
-
-    margin-top:12px;
-}
-
-/* COMMENTS */
-
-.comment-box{
+.comments{
     margin-top:20px;
-
-    border-top:1px solid #444;
-
-    padding-top:15px;
-}
-
-.comment-input{
-    display:flex;
-    gap:8px;
-}
-
-.comment-input input{
-    flex:1;
-
-    padding:12px;
-
-    border-radius:20px;
-
-    border:1px solid #777;
-}
-
-.comment-input button{
-    border:none;
-
-    background:red;
-
-    color:white;
-
-    padding:10px 16px;
-
-    border-radius:20px;
-
-    cursor:pointer;
 }
 
 .comment{
-    padding:13px 0;
-
-    border-bottom:1px solid #333;
-}
-
-.comment-user{
-    font-weight:bold;
-
-    margin-bottom:5px;
-}
-
-.comment-text{
-    margin-bottom:8px;
-}
-
-.comment-actions button{
-    border:none;
-
-    background:transparent;
-
-    color:#aaa;
-
-    cursor:pointer;
-
-    margin-right:10px;
-}
-
-/* PROFILE */
-
-.profile-box{
-    text-align:center;
-
-    padding:15px;
-}
-
-.avatar{
-    width:90px;
-    height:90px;
-
-    border-radius:50%;
-
-    background:linear-gradient(135deg,#ff0000,#8000ff);
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    color:white;
-
-    font-size:40px;
-
-    margin:auto auto 15px;
-}
-
-.subscribe{
-    border:none;
-
-    background:red;
-
-    color:white;
-
-    padding:11px 20px;
-
-    border-radius:22px;
-
-    cursor:pointer;
-}
-
-/* NOTIFICATION */
-
-.notification{
-    position:fixed;
-
-    right:20px;
-    bottom:20px;
-
-    background:#222;
-
-    color:white;
-
-    padding:15px 20px;
-
+    padding:10px;
+    background:#eee;
     border-radius:10px;
-
-    display:none;
-
-    z-index:300;
+    margin:8px 0;
 }
 
-/* MOBILE */
+.dark .comment{
+    background:#333;
+}
 
-@media(max-width:750px){
+.empty{
+    text-align:center;
+    padding:60px;
+    color:#777;
+}
 
+@media(max-width:700px){
     .sidebar{
-        display:none;
+        width:70px;
     }
 
-    .content{
-        margin-left:0;
-        padding:15px;
+    .sidebar button{
+        font-size:0;
+        text-align:center;
     }
 
-    .search{
-        margin-left:15px;
-        width:35%;
+    .sidebar button:first-letter{
+        font-size:20px;
+    }
+
+    .main{
+        margin-left:70px;
+        width:calc(100% - 70px);
+    }
+
+    header{
+        gap:8px;
     }
 
     .logo{
-        font-size:19px;
+        font-size:18px;
     }
-
-    .header-buttons button{
-        padding:8px;
-    }
-
 }
-
 </style>
 </head>
 
 <body>
 
-
-<!-- HEADER -->
-
 <header>
+    <div class="logo">▶ MusaTube</div>
 
-<div class="logo">
-▶ MusaTube
-</div>
+    <div class="search">
+        <input id="searchBox" placeholder="Search MusaTube..." oninput="searchVideos()">
+        <button onclick="searchVideos()">🔍</button>
+    </div>
 
-<div class="search">
-
-<input
-id="searchInput"
-placeholder="Search videos..."
-oninput="searchVideos()">
-
-<button onclick="searchVideos()">
-🔍
-</button>
-
-</div>
-
-<div class="header-buttons">
-
-<button onclick="toggleDark()">
-🌙
-</button>
-
-<button onclick="showNotifications()">
-🔔
-</button>
-
-<button
-class="post-button"
-onclick="openCamera()">
-
-➕ Post
-
-</button>
-
-</div>
-
+    <div class="profile">M</div>
 </header>
 
+<div class="layout">
 
-<!-- SIDEBAR -->
+<aside class="sidebar">
 
-<div class="sidebar">
-
-<button onclick="showHome()">
-🏠 Home
-</button>
-
-<button onclick="showTrending()">
-🔥 Trending
-</button>
-
-<button onclick="showShorts()">
-⚡ Shorts
-</button>
-
-<button onclick="showFavorites()">
-⭐ Favorites
-</button>
-
-<button onclick="showWatchLater()">
-🔖 Watch Later
-</button>
-
-<button onclick="showHistory()">
-🕐 History
-</button>
+<button onclick="showHome()">🏠 Home</button>
+<button onclick="showTrending()">🔥 Trending</button>
+<button onclick="showSubscriptions()">📺 Subscriptions</button>
+<button onclick="showHistory()">🕒 History</button>
+<button onclick="showLiked()">👍 Liked</button>
+<button onclick="showSaved()">🔖 Watch later</button>
 
 <hr style="margin:15px 0">
 
-<button>
-🎮 Gaming
-</button>
-
-<button>
-🎵 Music
-</button>
-
-<button>
-⚽ Sports
-</button>
-
-<button>
-📚 Learning
-</button>
+<button onclick="filterCategory('Gaming')">🎮 Gaming</button>
+<button onclick="filterCategory('Minecraft')">⛏️ Minecraft</button>
+<button onclick="filterCategory('Music')">🎵 Music</button>
+<button onclick="filterCategory('Funny')">😂 Funny</button>
+<button onclick="filterCategory('Shorts')">📱 Shorts</button>
 
 <hr style="margin:15px 0">
 
-<button onclick="openProfile()">
-👤 My Channel
-</button>
+<button onclick="toggleDark()">🌙 Dark mode</button>
+<button onclick="openSettings()">⚙️ Settings</button>
 
-<button>
-⚙️ Settings
-</button>
+</aside>
 
+<main class="main">
+
+<div class="top-buttons">
+    <button class="post" onclick="openUpload()">➕ Upload Video</button>
+    <button class="camera" onclick="openCamera()">🎥 Camera</button>
+    <button class="screen" onclick="openScreen()">🖥️ Share Screen</button>
 </div>
-
-
-<!-- MAIN -->
-
-<main class="content">
 
 <div class="categories">
-
-<button onclick="showHome()">
-All
-</button>
-
-<button onclick="filterCategory('Gaming')">
-Gaming
-</button>
-
-<button onclick="filterCategory('Minecraft')">
-Minecraft
-</button>
-
-<button onclick="filterCategory('Music')">
-Music
-</button>
-
-<button onclick="filterCategory('Funny')">
-Funny
-</button>
-
-<button onclick="showShorts()">
-Shorts
-</button>
-
+    <button onclick="showHome()">All</button>
+    <button onclick="filterCategory('Gaming')">Gaming</button>
+    <button onclick="filterCategory('Minecraft')">Minecraft</button>
+    <button onclick="filterCategory('Music')">Music</button>
+    <button onclick="filterCategory('Funny')">Funny</button>
+    <button onclick="filterCategory('Shorts')">Shorts</button>
 </div>
 
-
-<h2 id="pageTitle">
-Recommended Videos
-</h2>
+<h2 id="pageTitle">Recommended</h2>
 
 <br>
 
-<div
-class="videos"
-id="videos">
-</div>
+<div id="videos" class="videos"></div>
 
 </main>
-
-
-<!-- CAMERA MODAL -->
-
-<div
-class="modal"
-id="cameraModal">
-
-<div class="modal-content">
-
-<h2>
-📷 Record Your Video
-</h2>
-
-<video
-id="camera"
-autoplay
-muted>
-</video>
-
-<div class="camera-buttons">
-
-<button
-class="red"
-onclick="startRecording()">
-⏺ Start
-</button>
-
-<button
-onclick="stopRecording()">
-⏹ Stop
-</button>
-
-<button
-onclick="closeCamera()">
-❌ Close
-</button>
-
 </div>
 
-<video
-id="recorded"
-controls>
-</video>
 
-<div id="postForm"
-style="display:none;margin-top:15px;">
+<!-- UPLOAD MODAL -->
 
-<input
-id="newTitle"
-placeholder="Video title">
+<div class="modal" id="uploadModal">
 
-<textarea
-id="newDescription"
-placeholder="Description"></textarea>
+<div class="modal-box">
 
-<select id="newCategory">
+<button class="close" onclick="closeModal('uploadModal')">✕</button>
 
+<h2>📤 Upload Video</h2>
+
+<input type="file" id="videoFile" accept="video/*">
+
+<input id="uploadTitle" placeholder="Video title">
+
+<textarea id="uploadDescription" placeholder="Description"></textarea>
+
+<select id="uploadCategory">
 <option>Gaming</option>
 <option>Minecraft</option>
 <option>Music</option>
 <option>Funny</option>
 <option>Shorts</option>
-
+<option>Learning</option>
 </select>
 
+<input type="file" id="thumbnailFile" accept="image/*">
+
 <div class="modal-buttons">
-
-<button
-class="red"
-onclick="publishVideo()">
-
-🚀 Publish
-
-</button>
-
-<button
-class="gray"
-onclick="closeCamera()">
-
-Cancel
-
-</button>
-
+<button class="publish" onclick="publishUpload()">🚀 Publish</button>
 </div>
 
 </div>
-
-</div>
-
 </div>
 
 
-<!-- VIDEO PLAYER -->
+<!-- CAMERA MODAL -->
 
-<div
-class="modal"
-id="videoPlayerModal">
+<div class="modal" id="cameraModal">
 
-<div class="player-content">
+<div class="modal-box">
 
-<button
-onclick="closePlayer()"
-style="
-float:right;
-background:none;
-border:none;
-color:white;
-font-size:25px;
-cursor:pointer;">
-✕
-</button>
+<button class="close" onclick="closeModal('cameraModal')">✕</button>
 
-<video
-id="bigVideo"
-controls>
-</video>
+<h2>🎥 Record Camera</h2>
 
-<div
-class="player-title"
-id="bigTitle">
+<video id="cameraPreview" autoplay muted></video>
+
+<div class="modal-buttons">
+<button class="record" onclick="startCamera()">🔴 Start</button>
+<button class="stop" onclick="stopCamera()">⏹ Stop</button>
 </div>
 
-<div
-id="bigStats"
-style="color:#aaa;margin-top:7px;">
+<input id="cameraTitle" placeholder="Video title">
+
+<textarea id="cameraDescription" placeholder="Description"></textarea>
+
+<select id="cameraCategory">
+<option>Gaming</option>
+<option>Funny</option>
+<option>Shorts</option>
+<option>Learning</option>
+</select>
+
+<button class="publish" onclick="publishCamera()">🚀 Publish Recording</button>
+
 </div>
+</div>
+
+
+<!-- SCREEN MODAL -->
+
+<div class="modal" id="screenModal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeModal('screenModal')">✕</button>
+
+<h2>🖥️ Screen Recording</h2>
+
+<video id="screenPreview" autoplay muted></video>
+
+<div class="modal-buttons">
+<button class="record" onclick="startScreen()">🔴 Start Recording</button>
+<button class="stop" onclick="stopScreen()">⏹ Stop</button>
+</div>
+
+<input id="screenTitle" placeholder="Video title">
+
+<textarea id="screenDescription" placeholder="Description"></textarea>
+
+<button class="publish" onclick="publishScreen()">🚀 Publish Screen Recording</button>
+
+</div>
+</div>
+
+
+<!-- WATCH MODAL -->
+
+<div class="modal" id="watchModal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeModal('watchModal')">✕</button>
+
+<video id="watchVideo" controls style="width:100%;background:#000;border-radius:10px"></video>
+
+<h2 id="watchTitle"></h2>
+
+<p id="watchDescription"></p>
 
 <div class="actions">
-
-<button onclick="playerLike()">
-❤️ Like
-</button>
-
-<button onclick="playerDislike()">
-👎 Dislike
-</button>
-
-<button onclick="playerFavorite()">
-⭐ Favorite
-</button>
-
-<button onclick="playerWatchLater()">
-🔖 Watch Later
-</button>
-
-<button onclick="shareVideo()">
-🔗 Share
-</button>
-
+<button onclick="likeCurrent()">👍 Like</button>
+<button onclick="dislikeCurrent()">👎 Dislike</button>
+<button onclick="saveCurrent()">🔖 Save</button>
+<button onclick="shareCurrent()">🔗 Share</button>
 </div>
 
+<div class="comments">
 
-<!-- COMMENTS -->
+<h3>💬 Comments</h3>
 
-<div class="comment-box">
+<input id="commentInput" placeholder="Write a comment...">
 
-<h3>
-💬 Comments
-</h3>
+<button class="publish" onclick="addComment()">Comment</button>
 
-<br>
-
-<div class="comment-input">
-
-<input
-id="commentInput"
-placeholder="Write a comment...">
-
-<button onclick="addComment()">
-Post
-</button>
-
-</div>
-
-<div id="comments">
-</div>
+<div id="commentList"></div>
 
 </div>
 
 </div>
-
 </div>
 
 
-<!-- PROFILE -->
+<!-- SETTINGS -->
 
-<div
-class="modal"
-id="profileModal">
+<div class="modal" id="settingsModal">
 
-<div class="modal-content profile-box">
+<div class="modal-box">
 
-<button
-onclick="closeProfile()"
-style="
-float:right;
-border:none;
-background:none;
-font-size:22px;">
-✕
-</button>
+<button class="close" onclick="closeModal('settingsModal')">✕</button>
 
-<div class="avatar">
-M
-</div>
+<h2>⚙️ Settings</h2>
 
-<h2>
-Musa
-</h2>
+<p>🎨 Theme</p>
 
-<p>
-🎥 Creator
-</p>
-
-<br>
-
-<button
-class="subscribe"
-id="subscribeButton"
-onclick="subscribe()">
-
-Subscribe
-
-</button>
+<button onclick="toggleDark()">🌙 Toggle Dark Mode</button>
 
 <br><br>
 
-<p id="subscriberCount">
-0 subscribers
-</p>
+<p>👤 Channel</p>
 
-<br>
+<input id="channelName" value="Musa Gaming">
 
-<p>
-Welcome to my channel! 🎮🔥
-</p>
+<button onclick="saveChannel()">Save Channel</button>
 
-</div>
+<br><br>
+
+<button onclick="clearAll()">🗑️ Clear My Local Data</button>
 
 </div>
-
-
-<!-- NOTIFICATION -->
-
-<div
-class="notification"
-id="notification">
-🔔 You have a new notification!
 </div>
 
 
 <script>
 
-/* DATA */
-
-let videos =
-JSON.parse(
-localStorage.getItem("musatube_data")
-) || [];
-
-let favorites =
-JSON.parse(
-localStorage.getItem("musatube_favorites")
-) || [];
-
-let watchLater =
-JSON.parse(
-localStorage.getItem("musatube_watchlater")
-) || [];
-
-let history =
-JSON.parse(
-localStorage.getItem("musatube_history")
-) || [];
+let videos = [];
 
 let currentVideo = null;
 
 let cameraStream = null;
+let cameraRecorder = null;
+let cameraChunks = [];
 
-let recorder = null;
+let screenStream = null;
+let screenRecorder = null;
+let screenChunks = [];
 
-let chunks = [];
-
-let recordedURL = null;
-
-let subscribers =
-Number(
-localStorage.getItem("musatube_subscribers")
-) || 0;
+let channel = localStorage.getItem("channel") || "Musa Gaming";
 
 
-/* SAVE */
+/* SAMPLE VIDEOS */
 
-function save(){
+videos = [
 
-localStorage.setItem(
-"musatube_data",
-JSON.stringify(videos)
-);
+{
+id:1,
+title:"Minecraft PvP Challenge 🔥",
+description:"Amazing Minecraft PvP battle!",
+category:"Minecraft",
+channel:"Musa Gaming",
+views:1240,
+likes:120,
+dislikes:5,
+video:"",
+comments:[]
+},
 
-localStorage.setItem(
-"musatube_favorites",
-JSON.stringify(favorites)
-);
+{
+id:2,
+title:"Crazy Gaming Moment 😂",
+description:"You won't believe what happened!",
+category:"Gaming",
+channel:"Musa Gaming",
+views:980,
+likes:80,
+dislikes:3,
+video:"",
+comments:[]
+},
 
-localStorage.setItem(
-"musatube_watchlater",
-JSON.stringify(watchLater)
-);
-
-localStorage.setItem(
-"musatube_history",
-JSON.stringify(history)
-);
-
-localStorage.setItem(
-"musatube_subscribers",
-subscribers
-);
-
+{
+id:3,
+title:"My New Song 🎵",
+description:"A new music video.",
+category:"Music",
+channel:"Musa Music",
+views:2300,
+likes:210,
+dislikes:8,
+video:"",
+comments:[]
 }
 
+];
 
-/* CAMERA */
+let userVideos = JSON.parse(localStorage.getItem("userVideos") || "[]");
 
-async function openCamera(){
+videos = videos.concat(userVideos);
 
-document.getElementById(
-"cameraModal"
-).style.display="flex";
 
-try{
-
-cameraStream =
-await navigator.mediaDevices.getUserMedia({
-
-video:true,
-audio:true
-
-});
-
-document.getElementById(
-"camera"
-).srcObject =
-cameraStream;
-
-}catch(e){
-
-alert(
-"Please allow camera and microphone access."
-);
-
-}
-
-}
-
-
-function startRecording(){
-
-if(!cameraStream){
-
-alert("Camera is not ready!");
-
-return;
-
-}
-
-chunks=[];
-
-recorder =
-new MediaRecorder(cameraStream);
-
-recorder.ondataavailable =
-e=>{
-
-if(e.data.size>0)
-chunks.push(e.data);
-
-};
-
-recorder.onstop=()=>{
-
-let blob =
-new Blob(
-chunks,
-{type:"video/webm"}
-);
-
-recordedURL =
-URL.createObjectURL(blob);
-
-let recorded =
-document.getElementById(
-"recorded"
-);
-
-recorded.src =
-recordedURL;
-
-recorded.style.display="block";
-
-document.getElementById(
-"postForm"
-).style.display="block";
-
-};
-
-recorder.start();
-
-notify("🔴 Recording started!");
-
-}
-
-
-function stopRecording(){
-
-if(
-recorder &&
-recorder.state!=="inactive"
-){
-
-recorder.stop();
-
-notify("⏹ Recording stopped!");
-
-}
-
-}
-
-
-/* PUBLISH */
-
-function publishVideo(){
-
-let title =
-document.getElementById(
-"newTitle"
-).value.trim();
-
-let description =
-document.getElementById(
-"newDescription"
-).value.trim();
-
-let category =
-document.getElementById(
-"newCategory"
-).value;
-
-if(!recordedURL){
-
-alert("Record a video first!");
-
-return;
-
-}
-
-if(!title){
-
-alert("Enter a title!");
-
-return;
-
-}
-
-let video={
-
-id:Date.now(),
-
-title:title,
-
-description:description,
-
-category:category,
-
-url:recordedURL,
-
-likes:0,
-
-dislikes:0,
-
-views:0,
-
-comments:[],
-
-date:new Date().toLocaleDateString()
-
-};
-
-videos.unshift(video);
-
-save();
-
-displayVideos();
-
-closeCamera();
-
-notify("🎉 Video published!");
-
-}
-
-
-/* DISPLAY */
+/* DISPLAY VIDEOS */
 
 function displayVideos(list=videos){
 
-let box =
-document.getElementById("videos");
+const box=document.getElementById("videos");
 
 box.innerHTML="";
 
 if(list.length===0){
 
-box.innerHTML=
-"<h2>No videos found 😢</h2>";
+box.innerHTML='<div class="empty">😢 No videos found</div>';
 
 return;
 
 }
 
-list.forEach(video=>{
+list.forEach(v=>{
 
-let card =
-document.createElement("div");
+const card=document.createElement("div");
 
 card.className="card";
 
-card.dataset.id=video.id;
+let thumbnail="";
+
+if(v.video){
+
+thumbnail=`<video src="${v.video}" muted></video>`;
+
+}else{
+
+thumbnail=`<div style="font-size:45px">▶️</div>`;
+
+}
 
 card.innerHTML=`
 
-<video
-class="thumbnail"
-src="${video.url}"
-onclick="openPlayer(${video.id})">
-</video>
-
-<div class="info">
-
-<div class="title">
-${escapeHTML(video.title)}
+<div class="thumbnail" onclick="watchVideo(${v.id})">
+${thumbnail}
 </div>
+
+<div class="card-content">
+
+<div class="title">${escapeHTML(v.title)}</div>
+
+<div class="channel">👤 ${escapeHTML(v.channel)}</div>
 
 <div class="channel">
-👤 Musa
-</div>
-
-<div class="stats">
-${video.views} views • ${video.date}
+${v.views} views • ${v.category}
 </div>
 
 <div class="actions">
 
-<button onclick="likeVideo(${video.id})">
-❤️ ${video.likes}
+<button onclick="event.stopPropagation();likeVideo(${v.id})">
+👍 ${v.likes}
 </button>
 
-<button onclick="openPlayer(${video.id})">
-💬 ${video.comments.length}
-</button>
-
-<button onclick="addFavorite(${video.id})">
-⭐
-</button>
-
-<button onclick="addWatchLater(${video.id})">
+<button onclick="event.stopPropagation();saveVideo(${v.id})">
 🔖
 </button>
 
-<button onclick="deleteVideo(${video.id})">
-🗑
+<button onclick="event.stopPropagation();shareVideo(${v.id})">
+🔗
 </button>
 
 </div>
@@ -1329,323 +746,504 @@ box.appendChild(card);
 }
 
 
-/* PLAYER */
+/* UPLOAD */
 
-function openPlayer(id){
+function openUpload(){
 
-let video =
-videos.find(v=>v.id===id);
-
-if(!video)return;
-
-currentVideo=id;
-
-video.views++;
-
-if(!history.includes(id)){
-
-history.unshift(id);
+document.getElementById("uploadModal").style.display="flex";
 
 }
 
-save();
+function publishUpload(){
 
-document.getElementById(
-"bigVideo"
-).src=video.url;
+const file=document.getElementById("videoFile").files[0];
 
-document.getElementById(
-"bigTitle"
-).innerText=video.title;
+const title=document.getElementById("uploadTitle").value.trim();
 
-document.getElementById(
-"bigStats"
-).innerText=
-video.views+" views • "+video.date;
+const description=document.getElementById("uploadDescription").value.trim();
 
-document.getElementById(
-"videoPlayerModal"
-).style.display="flex";
+const category=document.getElementById("uploadCategory").value;
 
-displayComments();
+if(!file){
 
-}
-
-
-function closePlayer(){
-
-let player =
-document.getElementById(
-"bigVideo"
-);
-
-player.pause();
-
-player.src="";
-
-document.getElementById(
-"videoPlayerModal"
-).style.display="none";
-
-}
-
-
-/* LIKE */
-
-function likeVideo(id){
-
-let video =
-videos.find(v=>v.id===id);
-
-if(video){
-
-video.likes++;
-
-save();
-
-displayVideos();
-
-}
-
-}
-
-
-function playerLike(){
-
-likeVideo(currentVideo);
-
-}
-
-
-function playerDislike(){
-
-let video =
-videos.find(v=>v.id===currentVideo);
-
-if(video){
-
-video.dislikes++;
-
-save();
-
-notify("👎 Disliked");
-
-}
-
-}
-
-
-/* FAVORITES */
-
-function addFavorite(id){
-
-if(!favorites.includes(id)){
-
-favorites.push(id);
-
-notify("⭐ Added to favorites!");
-
-}else{
-
-favorites =
-favorites.filter(x=>x!==id);
-
-notify("Removed from favorites");
-
-}
-
-save();
-
-}
-
-
-function playerFavorite(){
-
-addFavorite(currentVideo);
-
-}
-
-
-/* WATCH LATER */
-
-function addWatchLater(id){
-
-if(!watchLater.includes(id)){
-
-watchLater.push(id);
-
-notify("🔖 Added to Watch Later!");
-
-}else{
-
-watchLater =
-watchLater.filter(x=>x!==id);
-
-}
-
-save();
-
-}
-
-
-function playerWatchLater(){
-
-addWatchLater(currentVideo);
-
-}
-
-
-/* COMMENTS */
-
-function addComment(){
-
-let input =
-document.getElementById(
-"commentInput"
-);
-
-let text =
-input.value.trim();
-
-if(!text)return;
-
-let video =
-videos.find(
-v=>v.id===currentVideo
-);
-
-video.comments.push({
-
-id:Date.now(),
-
-user:"Musa",
-
-text:text,
-
-likes:0,
-
-pinned:false
-
-});
-
-input.value="";
-
-save();
-
-displayComments();
-
-}
-
-
-function displayComments(){
-
-let video =
-videos.find(
-v=>v.id===currentVideo
-);
-
-let box =
-document.getElementById(
-"comments"
-);
-
-box.innerHTML="";
-
-if(!video.comments.length){
-
-box.innerHTML=
-"<p style='color:#aaa'>No comments yet. Be the first! 💬</p>";
+alert("Choose a video first!");
 
 return;
 
 }
 
-video.comments
-.slice()
-.sort((a,b)=>
-Number(b.pinned)-Number(a.pinned)
-)
-.forEach(comment=>{
+if(!title){
 
-let div =
-document.createElement("div");
+alert("Enter a title!");
+
+return;
+
+}
+
+const url=URL.createObjectURL(file);
+
+const video={
+
+id:Date.now(),
+
+title:title,
+
+description:description,
+
+category:category,
+
+channel:channel,
+
+views:0,
+
+likes:0,
+
+dislikes:0,
+
+video:url,
+
+comments:[]
+
+};
+
+videos.unshift(video);
+
+saveUserVideos();
+
+displayVideos();
+
+closeModal("uploadModal");
+
+alert("🎉 Video posted!");
+
+}
+
+
+/* CAMERA */
+
+function openCamera(){
+
+document.getElementById("cameraModal").style.display="flex";
+
+}
+
+async function startCamera(){
+
+try{
+
+cameraStream=await navigator.mediaDevices.getUserMedia({
+
+video:true,
+audio:true
+
+});
+
+document.getElementById("cameraPreview").srcObject=cameraStream;
+
+cameraChunks=[];
+
+cameraRecorder=new MediaRecorder(cameraStream);
+
+cameraRecorder.ondataavailable=e=>{
+
+if(e.data.size>0) cameraChunks.push(e.data);
+
+};
+
+cameraRecorder.start();
+
+}catch(e){
+
+alert("Camera permission was denied or camera is unavailable.");
+
+}
+
+}
+
+function stopCamera(){
+
+if(!cameraRecorder)return;
+
+cameraRecorder.stop();
+
+cameraStream.getTracks().forEach(track=>track.stop());
+
+}
+
+function publishCamera(){
+
+if(cameraChunks.length===0){
+
+alert("Record something first!");
+
+return;
+
+}
+
+const blob=new Blob(cameraChunks,{type:"video/webm"});
+
+const url=URL.createObjectURL(blob);
+
+const title=document.getElementById("cameraTitle").value || "My Camera Video";
+
+const description=document.getElementById("cameraDescription").value;
+
+const category=document.getElementById("cameraCategory").value;
+
+const video={
+
+id:Date.now(),
+
+title:title,
+
+description:description,
+
+category:category,
+
+channel:channel,
+
+views:0,
+
+likes:0,
+
+dislikes:0,
+
+video:url,
+
+comments:[]
+
+};
+
+videos.unshift(video);
+
+saveUserVideos();
+
+displayVideos();
+
+closeModal("cameraModal");
+
+alert("🎥 Camera video posted!");
+
+}
+
+
+/* SCREEN RECORDING */
+
+function openScreen(){
+
+document.getElementById("screenModal").style.display="flex";
+
+}
+
+async function startScreen(){
+
+try{
+
+screenStream=await navigator.mediaDevices.getDisplayMedia({
+
+video:true,
+audio:true
+
+});
+
+document.getElementById("screenPreview").srcObject=screenStream;
+
+screenChunks=[];
+
+screenRecorder=new MediaRecorder(screenStream);
+
+screenRecorder.ondataavailable=e=>{
+
+if(e.data.size>0) screenChunks.push(e.data);
+
+};
+
+screenRecorder.start();
+
+screenStream.getVideoTracks()[0].onended=()=>{
+
+stopScreen();
+
+};
+
+}catch(e){
+
+alert("Screen sharing was cancelled.");
+
+}
+
+}
+
+function stopScreen(){
+
+if(!screenRecorder)return;
+
+screenRecorder.stop();
+
+if(screenStream){
+
+screenStream.getTracks().forEach(track=>track.stop());
+
+}
+
+}
+
+function publishScreen(){
+
+if(screenChunks.length===0){
+
+alert("Record your screen first!");
+
+return;
+
+}
+
+const blob=new Blob(screenChunks,{type:"video/webm"});
+
+const url=URL.createObjectURL(blob);
+
+const title=document.getElementById("screenTitle").value || "My Screen Recording";
+
+const description=document.getElementById("screenDescription").value;
+
+const video={
+
+id:Date.now(),
+
+title:title,
+
+description:description,
+
+category:"Gaming",
+
+channel:channel,
+
+views:0,
+
+likes:0,
+
+dislikes:0,
+
+video:url,
+
+comments:[]
+
+};
+
+videos.unshift(video);
+
+saveUserVideos();
+
+displayVideos();
+
+closeModal("screenModal");
+
+alert("🖥️ Screen recording posted!");
+
+}
+
+
+/* WATCH */
+
+function watchVideo(id){
+
+const v=videos.find(x=>x.id===id);
+
+if(!v)return;
+
+currentVideo=v;
+
+v.views++;
+
+document.getElementById("watchVideo").src=v.video;
+
+document.getElementById("watchTitle").textContent=v.title;
+
+document.getElementById("watchDescription").textContent=v.description;
+
+showComments();
+
+document.getElementById("watchModal").style.display="flex";
+
+saveUserVideos();
+
+}
+
+function showComments(){
+
+const list=document.getElementById("commentList");
+
+list.innerHTML="";
+
+if(!currentVideo.comments.length){
+
+list.innerHTML="<p>No comments yet. Be the first!</p>";
+
+return;
+
+}
+
+currentVideo.comments.forEach((c,i)=>{
+
+const div=document.createElement("div");
 
 div.className="comment";
 
 div.innerHTML=`
 
-<div class="comment-user">
-${comment.pinned?"📌 ":""}👤 ${escapeHTML(comment.user)}
-</div>
+<b>${escapeHTML(c.name)}</b><br>
 
-<div class="comment-text">
-${escapeHTML(comment.text)}
-</div>
+${escapeHTML(c.text)}
 
-<div class="comment-actions">
+<br>
 
-<button onclick="likeComment(${comment.id})">
-❤️ ${comment.likes}
+<button onclick="likeComment(${i})">
+❤️ ${c.likes}
 </button>
-
-<button onclick="pinComment(${comment.id})">
-📌 Pin
-</button>
-
-</div>
 
 `;
 
-box.appendChild(div);
+list.appendChild(div);
 
 });
 
 }
 
+function addComment(){
 
-function likeComment(id){
+const text=document.getElementById("commentInput").value.trim();
 
-let video =
-videos.find(v=>v.id===currentVideo);
+if(!text)return;
 
-let comment =
-video.comments.find(
-c=>c.id===id
-);
+currentVideo.comments.push({
 
-if(comment){
+name:channel,
+text:text,
+likes:0
 
-comment.likes++;
+});
 
-save();
+document.getElementById("commentInput").value="";
 
-displayComments();
+showComments();
+
+saveUserVideos();
+
+}
+
+function likeComment(i){
+
+currentVideo.comments[i].likes++;
+
+showComments();
+
+saveUserVideos();
+
+}
+
+
+/* LIKES */
+
+function likeCurrent(){
+
+currentVideo.likes++;
+
+saveUserVideos();
+
+alert("👍 Liked!");
+
+}
+
+function dislikeCurrent(){
+
+currentVideo.dislikes++;
+
+saveUserVideos();
+
+alert("👎 Disliked!");
+
+}
+
+function likeVideo(id){
+
+const v=videos.find(x=>x.id===id);
+
+v.likes++;
+
+saveUserVideos();
+
+displayVideos();
+
+}
+
+
+/* SAVE */
+
+function saveCurrent(){
+
+let saved=JSON.parse(localStorage.getItem("saved")||"[]");
+
+if(!saved.includes(currentVideo.id)){
+
+saved.push(currentVideo.id);
+
+localStorage.setItem("saved",JSON.stringify(saved));
+
+alert("🔖 Saved!");
+
+}else{
+
+alert("Already saved!");
 
 }
 
 }
 
+function saveVideo(id){
 
-function pinComment(id){
+let saved=JSON.parse(localStorage.getItem("saved")||"[]");
 
-let video =
-videos.find(v=>v.id===currentVideo);
+if(!saved.includes(id)){
 
-video.comments.forEach(
-c=>c.pinned=false
-);
+saved.push(id);
 
-let comment =
-video.comments.find(
-c=>c.id===id
-);
+localStorage.setItem("saved",JSON.stringify(saved));
 
-if(comment)
-comment.pinned=true;
+}
 
-save();
+alert("🔖 Added to Watch Later");
 
-displayComments();
+}
+
+
+/* SHARE */
+
+function shareCurrent(){
+
+shareVideo(currentVideo.id);
+
+}
+
+function shareVideo(id){
+
+const link=location.href+"#video-"+id;
+
+if(navigator.share){
+
+navigator.share({
+
+title:"MusaTube Video",
+url:link
+
+});
+
+}else{
+
+navigator.clipboard.writeText(link);
+
+alert("🔗 Video link copied!");
+
+}
 
 }
 
@@ -1654,42 +1252,36 @@ displayComments();
 
 function searchVideos(){
 
-let text =
-document.getElementById(
-"searchInput"
-).value.toLowerCase();
+const q=document.getElementById("searchBox").value.toLowerCase();
 
-let results =
-videos.filter(v=>
-v.title.toLowerCase()
-.includes(text)
+const results=videos.filter(v=>
+
+v.title.toLowerCase().includes(q) ||
+
+v.description.toLowerCase().includes(q) ||
+
+v.category.toLowerCase().includes(q) ||
+
+v.channel.toLowerCase().includes(q)
+
 );
 
-document.getElementById(
-"pageTitle"
-).innerText=
-"Search Results";
+document.getElementById("pageTitle").textContent=
+
+q ? "Search results" : "Recommended";
 
 displayVideos(results);
 
 }
 
 
-/* CATEGORY */
+/* CATEGORIES */
 
 function filterCategory(category){
 
-let results =
-videos.filter(
-v=>v.category===category
-);
+document.getElementById("pageTitle").textContent=category;
 
-document.getElementById(
-"pageTitle"
-).innerText=
-category+" Videos";
-
-displayVideos(results);
+displayVideos(videos.filter(v=>v.category===category));
 
 }
 
@@ -1698,12 +1290,9 @@ displayVideos(results);
 
 function showHome(){
 
-document.getElementById(
-"pageTitle"
-).innerText=
-"Recommended Videos";
+document.getElementById("pageTitle").textContent="Recommended";
 
-displayVideos();
+displayVideos(videos);
 
 }
 
@@ -1712,77 +1301,26 @@ displayVideos();
 
 function showTrending(){
 
-let results =
-[...videos]
-.sort(
-(a,b)=>
-(b.likes+b.views)-
-(a.likes+a.views)
+document.getElementById("pageTitle").textContent="🔥 Trending";
+
+const sorted=[...videos].sort((a,b)=>
+
+(b.views+b.likes*5)-(a.views+a.likes*5)
+
 );
 
-document.getElementById(
-"pageTitle"
-).innerText=
-"🔥 Trending";
-
-displayVideos(results);
+displayVideos(sorted);
 
 }
 
 
-/* SHORTS */
+/* SUBSCRIPTIONS */
 
-function showShorts(){
+function showSubscriptions(){
 
-let results =
-videos.filter(
-v=>v.category==="Shorts"
-);
+document.getElementById("pageTitle").textContent="📺 Subscriptions";
 
-document.getElementById(
-"pageTitle"
-).innerText=
-"⚡ Shorts";
-
-displayVideos(results);
-
-}
-
-
-/* FAVORITES */
-
-function showFavorites(){
-
-let results =
-videos.filter(
-v=>favorites.includes(v.id)
-);
-
-document.getElementById(
-"pageTitle"
-).innerText=
-"⭐ Favorites";
-
-displayVideos(results);
-
-}
-
-
-/* WATCH LATER */
-
-function showWatchLater(){
-
-let results =
-videos.filter(
-v=>watchLater.includes(v.id)
-);
-
-document.getElementById(
-"pageTitle"
-).innerText=
-"🔖 Watch Later";
-
-displayVideos(results);
+displayVideos(videos.filter(v=>v.channel===channel));
 
 }
 
@@ -1791,54 +1329,29 @@ displayVideos(results);
 
 function showHistory(){
 
-let results =
-history.map(
-id=>videos.find(v=>v.id===id)
-).filter(Boolean);
+const history=JSON.parse(localStorage.getItem("history")||"[]");
 
-document.getElementById(
-"pageTitle"
-).innerText=
-"🕐 Watch History";
-
-displayVideos(results);
+displayVideos(videos.filter(v=>history.includes(v.id)));
 
 }
 
 
-/* DELETE */
+/* LIKED */
 
-function deleteVideo(id){
+function showLiked(){
 
-if(
-!confirm(
-"Delete this video?"
-)
-)return;
-
-videos =
-videos.filter(
-v=>v.id!==id
-);
-
-save();
-
-displayVideos();
-
-notify("🗑 Video deleted");
+displayVideos(videos.filter(v=>v.likes>0));
 
 }
 
 
-/* SHARE */
+/* SAVED */
 
-function shareVideo(){
+function showSaved(){
 
-navigator.clipboard.writeText(
-window.location.href
-);
+const saved=JSON.parse(localStorage.getItem("saved")||"[]");
 
-notify("🔗 Link copied!");
+displayVideos(videos.filter(v=>saved.includes(v.id)));
 
 }
 
@@ -1850,124 +1363,74 @@ function toggleDark(){
 document.body.classList.toggle("dark");
 
 localStorage.setItem(
-"darkmode",
+
+"dark",
+
 document.body.classList.contains("dark")
+
 );
 
 }
 
 
-/* PROFILE */
+/* SETTINGS */
 
-function openProfile(){
+function openSettings(){
 
-document.getElementById(
-"profileModal"
-).style.display="flex";
+document.getElementById("settingsModal").style.display="flex";
 
-document.getElementById(
-"subscriberCount"
-).innerText=
-subscribers+" subscribers";
+}
+
+function saveChannel(){
+
+channel=document.getElementById("channelName").value || "Musa Gaming";
+
+localStorage.setItem("channel",channel);
+
+alert("Channel saved!");
 
 }
 
 
-function closeProfile(){
+/* CLOSE */
 
-document.getElementById(
-"profileModal"
-).style.display="none";
+function closeModal(id){
 
-}
-
-
-function subscribe(){
-
-subscribers++;
-
-document.getElementById(
-"subscriberCount"
-).innerText=
-subscribers+" subscribers";
-
-document.getElementById(
-"subscribeButton"
-).innerText=
-"Subscribed ✓";
-
-save();
-
-notify("🔔 Subscribed!");
+document.getElementById(id).style.display="none";
 
 }
 
 
-/* NOTIFICATIONS */
+/* SAVE USER VIDEOS */
 
-function showNotifications(){
+function saveUserVideos(){
 
-notify(
-"🔔 No new notifications"
+localStorage.setItem(
+
+"userVideos",
+
+JSON.stringify(
+
+videos.filter(v=>v.id>3)
+
+)
+
 );
 
 }
 
 
-/* CLOSE CAMERA */
+/* CLEAR */
 
-function closeCamera(){
+function clearAll(){
 
-if(cameraStream){
+if(confirm("Delete your local MusaTube data?")){
 
-cameraStream
-.getTracks()
-.forEach(
-track=>track.stop()
-);
+localStorage.clear();
+
+location.reload();
 
 }
-
-document.getElementById(
-"cameraModal"
-).style.display="none";
-
-document.getElementById(
-"postForm"
-).style.display="none";
-
-document.getElementById(
-"recorded"
-).style.display="none";
-
-document.getElementById(
-"newTitle"
-).value="";
-
-document.getElementById(
-"newDescription"
-).value="";
-
-}
-
-
-/* NOTIFICATION */
-
-function notify(message){
-
-let box =
-document.getElementById(
-"notification"
-);
-
-box.innerText=message;
-
-box.style.display="block";
-
-setTimeout(
-()=>box.style.display="none",
-2500
-);
 
 }
 
@@ -1976,29 +1439,28 @@ setTimeout(
 
 function escapeHTML(text){
 
-return text
+return String(text)
+
 .replaceAll("&","&amp;")
+
 .replaceAll("<","&lt;")
+
 .replaceAll(">","&gt;")
+
 .replaceAll('"',"&quot;")
+
 .replaceAll("'","&#039;");
 
 }
 
 
-/* DARK MODE LOAD */
+/* START */
 
-if(
-localStorage.getItem("darkmode")
-==="true"
-){
+if(localStorage.getItem("dark")==="true"){
 
 document.body.classList.add("dark");
 
 }
-
-
-/* START */
 
 displayVideos();
 
